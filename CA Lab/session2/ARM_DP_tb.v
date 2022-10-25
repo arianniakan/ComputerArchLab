@@ -5,7 +5,7 @@ reg rst_n;
  
 ARM_DP uut(
     .rst (rst_n),
-    .clk (clk),
+    .clk (clk)
 );
 
 localparam CLK_PERIOD = 10;
