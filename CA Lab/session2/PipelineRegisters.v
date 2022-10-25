@@ -14,4 +14,5 @@ always @(posedge clk, posedge rst) begin
 end
 endmodule
 
-module ID_stage_Reg(input clk, rst, input)
+module ID_stage_Reg(input clk, rst, input [31:0] PC);
+endmodule
