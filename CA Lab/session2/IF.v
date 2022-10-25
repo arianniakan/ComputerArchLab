@@ -9,7 +9,7 @@ always @(posedge clk, posedge rst) begin
     if(rst) PC_reg <= 32'b0;
     else if(clk) PC_reg <= PC_in;
 end
-assign PC = PC+4;
+assign PC = PC_reg+4;
 assign PC_in = Branch_taken?BranchAddr:PC;
 InstMem IM (PC_reg, Instruction);
 endmodule

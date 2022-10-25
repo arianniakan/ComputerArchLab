@@ -19,7 +19,7 @@ initial begin
     rst_n<=1;
     @(posedge clk);
     repeat(2) @(posedge clk);
-    $finish(2);
+    #1000 $stop;
 end
 
 endmodule
