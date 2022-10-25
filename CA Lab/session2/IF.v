@@ -11,5 +11,5 @@ always @(posedge clk, posedge rst) begin
 end
 assign PC = PC_reg+4;
 assign PC_in = Branch_taken?BranchAddr:PC;
-InstMem IM (PC_reg, Instruction);
+InstMem IM (clk, PC_reg, Instruction);
 endmodule
