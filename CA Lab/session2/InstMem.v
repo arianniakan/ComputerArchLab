@@ -7,7 +7,7 @@
 // endmodule
 
 
-module InstMem(input clk, input [31:0] address, output [31:0] Inst);
+module InstMem(input clk, input [31:0] address, output reg [31:0] Inst);
 always @(address) begin
     case(address)
         32'd0:  Inst = 32'b000000_00001_00010_00000_00000000000;
