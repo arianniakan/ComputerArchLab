@@ -1,4 +1,4 @@
-module ARM_DP.v(input clk, rst);
+module ARM_DP(input clk, rst);
 
 
 wire [31:0] PC_IF, Instruction_IF;
