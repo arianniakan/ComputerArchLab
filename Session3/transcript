@@ -6,3 +6,43 @@
 # Compile of ControlUnit.v failed with 3 errors.
 # Compile of RegisterFile.v was successful.
 # 3 compiles, 1 failed with 3 errors.
+# Compile of ControlUnit.v was successful.
+vsim work.RegisterFile
+# vsim work.RegisterFile 
+# Start time: 13:36:28 on Nov 08,2022
+# Loading work.RegisterFile
+add wave -position insertpoint  \
+sim:/RegisterFile/clk \
+sim:/RegisterFile/rst \
+sim:/RegisterFile/src1 \
+sim:/RegisterFile/src2 \
+sim:/RegisterFile/Dest_wb \
+sim:/RegisterFile/Result_WB \
+sim:/RegisterFile/writeBackEn \
+sim:/RegisterFile/reg1 \
+sim:/RegisterFile/reg2 \
+sim:/RegisterFile/REGS
+force -freeze sim:/RegisterFile/clk 0 0
+force -freeze sim:/RegisterFile/rst 0 0
+run -all
+force -freeze sim:/RegisterFile/src1 0000 0
+force -freeze sim:/RegisterFile/src2 0001 0
+run -all
+force -freeze sim:/RegisterFile/src1 0010 0
+force -freeze sim:/RegisterFile/src2 1000 0
+run -all
+force -freeze sim:/RegisterFile/Result_WB 00000000000000000000000000001000 0
+run -all
+run -all
+force -freeze sim:/RegisterFile/clk 1 0
+run -all
+force -freeze sim:/RegisterFile/Dest_wb 0000 0
+run -all
+force -freeze sim:/RegisterFile/clk St0 0
+run -all
+force -freeze sim:/RegisterFile/writeBackEn 1 0
+run -all
+force -freeze sim:/RegisterFile/clk St1 0
+run -all
+force -freeze sim:/RegisterFile/clk St0 0
+run -all

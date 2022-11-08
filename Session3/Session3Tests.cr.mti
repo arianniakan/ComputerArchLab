@@ -1,0 +1,15 @@
+C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/RegisterFile.v {1 {vlog -work work -stats=none C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/RegisterFile.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module RegisterFile
+
+Top level modules:
+	RegisterFile
+
+} {} {}} C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ConditionCheck.v {1 {vlog -work work -stats=none C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ConditionCheck.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ConditionCheck
+
+Top level modules:
+	ConditionCheck
+
+} {} {}}
