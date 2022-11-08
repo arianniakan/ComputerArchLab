@@ -1,0 +1,9 @@
+vendor_name = ModelSim
+source_file = 1, C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/CA Lab/session2/PipelineRegisters.v
+source_file = 1, C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/CA Lab/session2/InstMem.v
+source_file = 1, C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/CA Lab/session2/IF.v
+source_file = 1, C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/CA Lab/session2/ARM_DP.v
+source_file = 1, C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/CA Lab/session2/db/DP_SYNTH_TEST.cbx.xml
+design_name = ARM_DP
+instance = comp, \clk~I , clk, ARM_DP, 1
+instance = comp, \rst~I , rst, ARM_DP, 1

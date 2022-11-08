@@ -1,0 +1,5 @@
+set tool_name "ModelSim (Verilog)"
+set corner_file_list {
+	{{"Slow Model"} {DP_SYNTH_TEST.vo DP_SYNTH_TEST_v.sdo}}
+	{{"Fast Model"} {DP_SYNTH_TEST_fast.vo DP_SYNTH_TEST_v_fast.sdo}}
+}
