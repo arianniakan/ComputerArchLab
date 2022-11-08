@@ -33,6 +33,30 @@ Z5 !s108 1667901599.000000
 Z6 o-work work
 Z7 tCvgOpt 0
 n@condition@check
+vControlUnit
+!s110 1667901980
+!i10b 1
+!s100 @_^BzPo9?hYRC]>@<dPM`0
+R1
+IIjZnTKMMOJ5c@A1nFKYFc1
+R2
+R3
+w1667901794
+8C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ControlUnit.v
+FC:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ControlUnit.v
+!i122 4
+L0 1 5
+R4
+r1
+!s85 0
+31
+!s108 1667901979.000000
+!s107 C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ControlUnit.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ControlUnit.v|
+!i113 1
+R6
+R7
+n@control@unit
 vRegisterFile
 R0
 !i10b 1
