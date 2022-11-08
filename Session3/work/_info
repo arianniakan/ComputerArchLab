@@ -1,6 +1,7 @@
 m255
 K4
 z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
 13
 !s112 1.1
 !i10d 8192
@@ -8,3 +9,51 @@ z2
 !i10f 100
 cModel Technology
 dC:/intelFPGA_lite/20.1
+vConditionCheck
+Z0 !s110 1667901599
+!i10b 1
+!s100 _B0_3<nlMhHgz2Jl`ezB22
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IM:Lh[HaOalTA17S<aTSZ82
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 dC:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3
+w1666699835
+8C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ConditionCheck.v
+FC:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ConditionCheck.v
+!i122 2
+L0 1 8
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z5 !s108 1667901599.000000
+!s107 C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ConditionCheck.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/ConditionCheck.v|
+!i113 1
+Z6 o-work work
+Z7 tCvgOpt 0
+n@condition@check
+vRegisterFile
+R0
+!i10b 1
+!s100 [C5>fK12Q2lQVTlh<@WJ73
+R1
+IEAYRMnNV5m8V2FhA[G[MD0
+R2
+R3
+w1667901349
+8C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/RegisterFile.v
+FC:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/RegisterFile.v
+!i122 3
+L0 1 32
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/RegisterFile.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/arian/OneDrive/Documents/GitHub/ComputerArchLab/Session3/RegisterFile.v|
+!i113 1
+R6
+R7
+n@register@file
