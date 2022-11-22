@@ -2,7 +2,7 @@ module Val2gen (
                     input m,
                     input signed [31:0] Val_RM,
                     input [11:0] imm,
-                    input [11:0] shift_operand
+                    input [11:0] shift_operand,
                     output reg [31:0] Val2
 );
     always @(m, Val_RM, imm, shift_operand) begin
@@ -26,13 +26,12 @@ module Val2gen (
             4'd15: Val2 = {22'd0, imm[7:0], 2'd0};
             endcase
          end
-        else begin 
-            case (shift_operand[6:0])
+        else if(~m) begin 
+            case (shift_operand[6:5])
                 2'b00: Val2 = Val_RM << shift_operand[11:7];
                 2'b01: Val2 = Val_RM >> shift_operand[11:7];
                 2'b10: Val2 = Val_RM >>> shift_operand[11:7];
                 2'b11: Val2 = Val_RM >> shift_operand[11:7] | Val_RM << ~shift_operand[11:7];
-                default: 
             endcase
         end
     end
