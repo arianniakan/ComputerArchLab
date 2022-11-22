@@ -8,8 +8,10 @@ always @(posedge clk, posedge rst) begin
         Instruction <=32'b0;
     end
     else if(clk) begin
-        PC<=PC_in;
-        Instruction<=Instruction_in;
+        if(~freeze) begin
+            PC<=PC_in;
+            Instruction<=Instruction_in;
+        end
     end
 end
 endmodule
