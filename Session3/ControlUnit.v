@@ -16,9 +16,9 @@ always @(Op_code, mode, S_in) begin
     S_out = S_in;
     case (mode)
         2'b00: begin
-        case (Op_mode)
+        case (Op_code)
             MOV: begin Execute_Command = 4'b0001; WB_enable = 1'b1; S_out = S_in;end 
-            MVM: begin Execute_Command = 4'b1001; WB_enable = 1'b1; S_out = S_in;end 
+            MVN: begin Execute_Command = 4'b1001; WB_enable = 1'b1; S_out = S_in;end 
             ADD: begin Execute_Command = 4'b0010; WB_enable = 1'b1; S_out = S_in;end 
             ADC: begin Execute_Command = 4'b0011; WB_enable = 1'b1; S_out = S_in;end 
             SUB: begin Execute_Command = 4'b0100; WB_enable = 1'b1; S_out = S_in;end 
@@ -33,8 +33,11 @@ always @(Op_code, mode, S_in) begin
         endcase
         end
         2'b01: begin
-            LDR: begin mem_read = 1'b1; Execute_Command = 4'b0010; WB_enable = 1'b1; S_out = 1'b1;end 
-            STR: begin mem_write = 1'b1; Execute_Command = 4'b0010; S_out = 1'b0;end
+            case (Op_code)
+
+            LDR: begin  mem_read = 1'b1; Execute_Command = 4'b0010; WB_enable = 1'b1; S_out = 1'b1; end 
+            STR: begin  mem_write = 1'b1; Execute_Command = 4'b0010; S_out = 1'b0; end
+            endcase
         end
         2'b10: begin
             B = 1'b1;

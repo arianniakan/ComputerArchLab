@@ -1,4 +1,4 @@
-module ALU (input [3:0] ALU_Comnd,input [31:0] Val1,Val2,input C, output [31:0] ALU_out);
+module ALU (input [3:0] ALU_Comnd,input [31:0] Val1,Val2,input C, output reg [31:0] ALU_out);
 
 parameter [3:0] MOV=4'b0001,MVN=4'b1001,ADD=4'b0010,ADC=4'b0011,SUB=4'b0100,AND=4'b0110,SBC=4'b0101,
                 ORR=4'b0111,EOR=4'b1000,CMP=4'b0100,TST=4'b0110,LDR=4'b0010,STR=4'b0010;
