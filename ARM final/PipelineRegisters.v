@@ -47,7 +47,7 @@ module ID_stage_Reg(input clk, rst,
                     output reg [11:0] imm,
                     output reg [11:0] shift_operand,
                     output reg [23:0] signed_immed_24,
-                    output reg [3:0] WB_Dest
+                    output reg [3:0] WB_Dest,
                     output reg flush,
                     output reg [31:0] status
 
@@ -144,7 +144,7 @@ module MEM_stage_Reg(
                     input [31:0] MEMdata_IN,
                     input [3:0] WB_Dest_IN,
 
-                    output reg [31:0] PC
+                    output reg [31:0] PC,
                     output reg WB_EN,
                     output reg MEM_R_EN,
                     output reg [31:0] ALU_Res,
