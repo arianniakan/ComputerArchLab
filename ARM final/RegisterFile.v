@@ -5,8 +5,8 @@ module RegisterFile( input clk, rst,
                      output [31:0] reg1, reg2);
 reg [31:0] REGS [0:14];
 
-always @(negedge clk, negedge rst) begin
-    if(~rst) begin
+always @(negedge clk, posedge rst) begin
+    if(rst) begin
         REGS[0] <= 32'b0;
         REGS[1] <= 32'd1;
         REGS[2] <= 32'd2;
@@ -23,7 +23,7 @@ always @(negedge clk, negedge rst) begin
         REGS[13] <= 32'd13;
         REGS[14] <= 32'd14;
     end
-    if (~clk) begin
+    else if (~clk) begin
         if (writeBackEn) REGS[Dest_wb] <= Result_WB;
     end
 end
