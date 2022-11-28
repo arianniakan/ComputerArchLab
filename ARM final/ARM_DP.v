@@ -84,7 +84,7 @@ wire [3:0]  EX_EXE_CMD;
                 );
 
 ID_stage_Reg ID_regs(.clk(clk), 
-                    .rst(clk), 
+                    .rst(rst), 
                     .PC_IN(PC_ID), 
                     .WB_EN_IN(ID_WB_EN),
                     .MEM_R_EN_IN(ID_MEM_R_EN),
