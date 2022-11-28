@@ -13,7 +13,7 @@ module EX_stage(input [31:0] PC,
                 
                 output wire [31:0] BranchAddr,
                 output [3:0] status_out,
-                output wire [31:0] ALU_out,
+                output wire [31:0] ALU_out
                 );
 // creating the val2 generator instance 
 wire [31:0] Val2;

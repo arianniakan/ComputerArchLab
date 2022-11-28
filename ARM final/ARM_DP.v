@@ -46,6 +46,10 @@ wire ID_B;
 wire ID_Val_RN;
 wire ID_Val_RM;
 
+wire [3:0] Dest_wb;
+wire [31:0] Result_WB;
+wire writeBackEn;
+
 
 wire        EX_WB_EN;
 wire        EX_MEM_R_EN;
@@ -75,7 +79,7 @@ wire [3:0]  EX_status;
                 .B       (ID_B), 
                 .S       (ID_S),
                 .Val_RN  (ID_Val_RN),
-                .Val_RM  (ID_Val_RM),
+                .Val_RM  (ID_Val_RM)
                 );
 
 ID_stage_Reg ID_regs(.clk(clk), 
@@ -118,13 +122,7 @@ ID_stage_Reg ID_regs(.clk(clk),
 //end of instruction decode stage instance
 
 // Execution Stage Instance 
-always @(posedge clk, posedge rst) begin
-    if(rst) status = 4'b0;
-    else if (clk) begin
-        if(EX_S) status = EX_status_out;
-    end
-    
-end
+
 
 wire [31:0] EX_BranchAd;
 wire [3:0]  EX_status_out;
@@ -133,6 +131,14 @@ wire [31:0] EX_ALU_out;
 wire [31:0] MEM_ALU_out;
 wire [31:0] MEM_Val_RM;
 wire [3:0]  MEM_WB_Dest;
+
+always @(posedge clk, posedge rst) begin
+    if(rst) status = 4'b0;
+    else if (clk) begin
+        if(EX_S) status = EX_status_out;
+    end
+    
+end
 
 EX_stage EX_inst(
                 .PC(PC_EX),
@@ -150,7 +156,7 @@ EX_stage EX_inst(
            
                 .BranchAddr (EX_BranchAd),
                 .status_out (EX_status_out),
-                .ALU_out    (EX_ALU_out),  
+                .ALU_out    (EX_ALU_out)
                 );
 
 
@@ -220,9 +226,7 @@ MEM_stage_Reg Mem_regs(
 //end of Memory Stage Instance
 
 // Write Back stage instance 
-wire [3:0] Dest_wb;
-wire [31:0] Result_WB;
-wire writeBackEn;
+
 
 assign writeBackEn = WB_WB_EN;
 assign Result_WB = WB_MEM_R_EN?WB_Mem_out:WB_ALU_out;

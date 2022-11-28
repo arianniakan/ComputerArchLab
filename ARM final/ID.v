@@ -15,7 +15,7 @@ module ID_stage (
     output B, 
     output S,
     output [31:0] Val_RN,
-    output [31:0] Val_RM,
+    output [31:0] Val_RM
 );
 //instantiation of Condition Check and its assosiated wires
 wire CondFlag;
@@ -41,7 +41,7 @@ ControlUnit (.S_in(Instruction[20]),
 assign WB_EN = ~CondFlag? WB_enable : 1'b0;
 assign MEM_R_EN  = ~CondFlag? mem_read : 1'b0;
 assign MEM_W_EN = ~CondFlag? mem_write : 1'b0;
-assign [3:0] EXE_CMD = ~CondFlag? Execute_Command : 1'b0;
+assign EXE_CMD = ~CondFlag? Execute_Command : 1'b0;
 assign B = ~CondFlag? B_out : 1'b0; 
 assign S = ~CondFlag? S_out : 1'b0;
 

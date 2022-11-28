@@ -106,7 +106,6 @@ module EX_stage_Reg(input clk, rst,
                     );
                     always @(posedge clk, posedge rst) begin
                         if(rst) begin
-                            PC <= 32'b0;
 
                             WB_EN <= 0;
                             MEM_R_EN <= 0;
@@ -117,7 +116,6 @@ module EX_stage_Reg(input clk, rst,
 
                         end
                         else if(clk) begin
-                            PC<=PC_in;
 
                             WB_EN <= WB_EN_IN;
                             MEM_R_EN <= MEM_R_EN_IN;

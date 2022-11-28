@@ -19,16 +19,16 @@ always @(ALU_Comnd,Val1,Val2) begin
     MOV:  ALU_out = Val2;
     MVN:  ALU_out = ~Val2;
     ADD:  begin {C1, ALU_out} = Val1+Val2;
-                    V1 = (val1[31] ^ val2[31]) & (ALU_out[31] ^ val1[31]);
+                    V1 = (Val1[31] ^ Val2[31]) & (ALU_out[31] ^ Val1[31]);
 
     end
-    ADC:  begin {C1, ALU_out} = Val1+Val2+C; V1 = (val1[31] ^ val2[31]) & (ALU_out[31] ^ val1[31]);end
-    SUB:  begin {C1, ALU_out} = Val1-Val2; V1 = (val1[31] ^ val2[31]) & (ALU_out[31] ^ val1[31]);end
-    SBC:  begin {C1, ALU_out} = Val1-Val2-~C; V1 = (val1[31] ^ val2[31]) & (ALU_out[31] ^ val1[31]);end
+    ADC:  begin {C1, ALU_out} = Val1+Val2+C; V1 = (Val1[31] ^ Val2[31]) & (ALU_out[31] ^ Val1[31]);end
+    SUB:  begin {C1, ALU_out} = Val1-Val2; V1 = (Val1[31] ^ Val2[31]) & (ALU_out[31] ^ Val1[31]);end
+    SBC:  begin {C1, ALU_out} = Val1-Val2-~C; V1 = (Val1[31] ^ Val2[31]) & (ALU_out[31] ^ Val1[31]);end
     AND:  ALU_out = Val1&Val2;
     ORR:  ALU_out = Val1|Val2;
     EOR:  ALU_out = Val1^Val2;
-    CMP:  begin {C1, ALU_out} = Val1-Val2; V1 = (val1[31] ^ val2[31]) &     (ALU_out[31] ^ val1[31]);end
+    CMP:  begin {C1, ALU_out} = Val1-Val2; V1 = (Val1[31] ^ Val2[31]) &     (ALU_out[31] ^ Val1[31]);end
     TST:  ALU_out = Val1&Val2;
     LDR:  ALU_out = Val1+Val2;
     STR:  ALU_out = Val1+Val2;
