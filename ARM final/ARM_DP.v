@@ -40,11 +40,11 @@ reg [3:0] status;
 wire ID_WB_EN;
 wire ID_MEM_R_EN;
 wire ID_MEM_W_EN;
-wire ID_EXE_CMD;
+wire [3:0] ID_EXE_CMD;
 wire ID_S;
 wire ID_B;
-wire ID_Val_RN;
-wire ID_Val_RM;
+wire [31:0] ID_Val_RN;
+wire [31:0] ID_Val_RM;
 
 wire [3:0] Dest_wb;
 wire [31:0] Result_WB;
@@ -63,6 +63,7 @@ wire [11:0] EX_shift_operand;
 wire [23:0] EX_signed_immed_24;
 wire [3:0]  EX_WB_Dest;
 wire [3:0]  EX_status;
+wire [3:0]  EX_EXE_CMD;
  ID_stage ID_inst(
                 .clk(clk), 
                 .rst(rst),
@@ -112,7 +113,8 @@ ID_stage_Reg ID_regs(.clk(clk),
                     .shift_operand  (EX_shift_operand),
                     .signed_immed_24(EX_signed_immed_24),
                     .status         (EX_status),
-                    .WB_Dest        (EX_WB_Dest)
+                    .WB_Dest        (EX_WB_Dest),
+                    .EXE_CMD        (EX_EXE_CMD)
 
                     );
 
@@ -142,9 +144,9 @@ end
 
 EX_stage EX_inst(
                 .PC(PC_EX),
-                .MEM_R_EN(EX_WB_EN),
-                .MEM_W_EN(EX_MEM_R_EN),
-                .EXE_CMD (EX_MEM_W_EN),
+                .MEM_R_EN(EX_MEM_R_EN),
+                .MEM_W_EN(EX_MEM_W_EN),
+                .EXE_CMD (EX_EXE_CMD),
                 .S(EX_S),
                 .Val_RN(EX_Val_RN),
                 .Val_RM(EX_Val_RM),
@@ -213,7 +215,7 @@ MEM_stage_Reg Mem_regs(
                     .WB_EN_IN   (MEM_WB_EN),
                     .MEM_R_EN_IN(MEM_MEM_R_EN),
                     .ALU_Res_IN(MEM_ALU_out),
-                    .MEMdata_I(Mem_out),
+                    .MEMdata_IN(Mem_out),
                     .WB_Dest_IN(MEM_WB_Dest),
 
                     .WB_EN   (WB_WB_EN),

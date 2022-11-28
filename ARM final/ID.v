@@ -2,7 +2,7 @@ module ID_stage (
     input clk, rst,
     input [31:0] PC,
     input [31:0] Instruction,
-    input [31:0] status,
+    input [3:0] status,
     input wire [3:0] Dest_wb,
     input wire [31:0] Result_WB,
     input wire writeBackEn,
@@ -19,10 +19,12 @@ module ID_stage (
 );
 //instantiation of Condition Check and its assosiated wires
 wire CondFlag;
+wire Z1, C1, N1, V1;
+assign {Z1, C1, N1, V1} = status;
+ConditionCheck Cond_check_inst (.Cond(Instruction[31:28]),
+                      .Z(Z1), .C(C1) , .N(N1), .V(V1),
+                      .CondFlag(CondFlag));
 
-ConditionCheck Cond_check_inst (Instruction[31:28],
-                      status[30], status[29], status[31], status[28],
-                      CondFlag);
 //end of Condition Check
 
 
@@ -31,7 +33,7 @@ wire [3:0] Execute_Command;
 wire mem_read, mem_write, WB_enable, B_out, S_out;
 
 
-ControlUnit (.S_in(Instruction[20]),
+ControlUnit CU (.S_in(Instruction[20]),
                     .mode(Instruction[27:26]),
                     .Op_code(Instruction[24:21]), 
                     .Execute_Command(Execute_Command),

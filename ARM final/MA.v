@@ -12,7 +12,7 @@ module MEM_stage (
 );
 
 
-Mem     (.clk(clk),
+Mem   mem_inst  (.clk(clk),
          .MemRead(MEM_R_EN),
          .MemWrite(MEM_W_EN),
          .in_address(ALU_Res),

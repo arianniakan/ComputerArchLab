@@ -33,7 +33,7 @@ module ID_stage_Reg(input clk, rst,
                     input [23:0] signed_immed_24_IN,
                     input [3:0] WB_Dest_IN,
                     input flush_IN,
-                    input [31:0] status_IN,
+                    input [3:0] status_IN,
 
 
 
@@ -41,6 +41,7 @@ module ID_stage_Reg(input clk, rst,
                     output reg WB_EN,
                     output reg MEM_R_EN,
                     output reg MEM_W_EN,
+                    output reg [3:0] EXE_CMD,
                     output reg B, 
                     output reg S,
                     output reg [31:0] Val_RN,
@@ -49,7 +50,7 @@ module ID_stage_Reg(input clk, rst,
                     output reg [11:0] shift_operand,
                     output reg [23:0] signed_immed_24,
                     output reg [3:0] WB_Dest,
-                    output reg [31:0] status
+                    output reg [3:0] status
 
                     );
 
@@ -68,6 +69,7 @@ module ID_stage_Reg(input clk, rst,
                             signed_immed_24 <= 0;
                             WB_Dest <= 0;
                             status <= 0;
+                            EXE_CMD <= 0;
                         end
                         else if(clk) begin
                             PC<=PC_IN;
@@ -83,6 +85,7 @@ module ID_stage_Reg(input clk, rst,
                             signed_immed_24 <= signed_immed_24_IN;
                             WB_Dest <= WB_Dest_IN;
                             status <= status_IN;
+                            EXE_CMD <= EXE_CMD_IN;
                         end
                     end
 endmodule

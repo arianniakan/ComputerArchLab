@@ -42,7 +42,7 @@ assign BranchAddr = PC + signed_immed_24;
 // creating the ALU instance 
             ALU alu_instance(
                              .ALU_Comnd(EXE_CMD),
-                             .Val1(Val1), 
+                             .Val1(Val_RN), 
                              .Val2(Val2),
                              .C(status[2]),
                              .ALU_out(ALU_out),
