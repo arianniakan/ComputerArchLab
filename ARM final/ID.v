@@ -40,12 +40,12 @@ ControlUnit CU (.S_in(Instruction[20]),
                     .mem_read(mem_read), .mem_write(mem_write), 
                     .WB_enable(WB_enable), .B(B_out), .S_out(S_out));
 
-assign WB_EN = ~CondFlag? WB_enable : 1'b0;
-assign MEM_R_EN  = ~CondFlag? mem_read : 1'b0;
-assign MEM_W_EN = ~CondFlag? mem_write : 1'b0;
-assign EXE_CMD = ~CondFlag? Execute_Command : 1'b0;
-assign B = ~CondFlag? B_out : 1'b0; 
-assign S = ~CondFlag? S_out : 1'b0;
+assign WB_EN =      CondFlag? WB_enable : 1'b0;
+assign MEM_R_EN  =  CondFlag? mem_read : 1'b0;
+assign MEM_W_EN =   CondFlag? mem_write : 1'b0;
+assign EXE_CMD =    CondFlag? Execute_Command : 4'b0;
+assign B =          CondFlag? B_out : 1'b0; 
+assign S =          CondFlag? S_out : 1'b0;
 
 //end of controlUnit instance
 
