@@ -23,7 +23,7 @@ module ID_stage_Reg(input clk, rst,
                     input WB_EN_IN,
                     input MEM_R_EN_IN,
                     input MEM_W_EN_IN,
-                    input EXE_CMD_IN,
+                    input [3:0] EXE_CMD_IN,
                     input B_IN, 
                     input S_IN,
                     input [31:0] Val_RN_IN,
@@ -41,7 +41,6 @@ module ID_stage_Reg(input clk, rst,
                     output reg WB_EN,
                     output reg MEM_R_EN,
                     output reg MEM_W_EN,
-                    output reg EXE_CMD,
                     output reg B, 
                     output reg S,
                     output reg [31:0] Val_RN,
@@ -50,7 +49,6 @@ module ID_stage_Reg(input clk, rst,
                     output reg [11:0] shift_operand,
                     output reg [23:0] signed_immed_24,
                     output reg [3:0] WB_Dest,
-                    output reg flush,
                     output reg [31:0] status
 
                     );
@@ -61,7 +59,6 @@ module ID_stage_Reg(input clk, rst,
                             WB_EN <= 0;
                             MEM_R_EN <= 0;
                             MEM_W_EN <= 0;
-                            EXE_CMD <= 0;
                             B <= 0;
                             S <= 0;
                             Val_RN <= 0;
@@ -70,7 +67,6 @@ module ID_stage_Reg(input clk, rst,
                             shift_operand <= 0;
                             signed_immed_24 <= 0;
                             WB_Dest <= 0;
-                            flush <= 0;
                             status <= 0;
                         end
                         else if(clk) begin
@@ -78,7 +74,6 @@ module ID_stage_Reg(input clk, rst,
                             WB_EN <= WB_EN_IN;
                             MEM_R_EN <= MEM_R_EN_IN;
                             MEM_W_EN <= MEM_W_EN_IN;
-                            EXE_CMD <= EXE_CMD_IN;
                             B <= B_IN;
                             S <= S_IN;
                             Val_RN <= Val_RN_IN;
@@ -87,7 +82,6 @@ module ID_stage_Reg(input clk, rst,
                             shift_operand <= shift_operand_IN;
                             signed_immed_24 <= signed_immed_24_IN;
                             WB_Dest <= WB_Dest_IN;
-                            flush <= flush_IN;
                             status <= status_IN;
                         end
                     end
@@ -96,7 +90,6 @@ endmodule
 
 
 module EX_stage_Reg(input clk, rst,
-                    input [31:0] PC_in, 
                     input WB_EN_IN,
                     input MEM_R_EN_IN,
                     input MEM_W_EN_IN,
@@ -104,7 +97,6 @@ module EX_stage_Reg(input clk, rst,
                     input [31:0] Val_RM_IN,
                     input [3:0] WB_Dest_IN,
 
-                    output reg [31:0] PC,
                     output reg WB_EN,
                     output reg MEM_R_EN,
                     output reg MEM_W_EN,
@@ -139,14 +131,12 @@ module EX_stage_Reg(input clk, rst,
 endmodule
 module MEM_stage_Reg(
                     input clk, rst, 
-                    input [31:0] PC_in, 
                     input WB_EN_IN,
                     input MEM_R_EN_IN,
                     input [31:0] ALU_Res_IN,
                     input [31:0] MEMdata_IN,
                     input [3:0] WB_Dest_IN,
 
-                    output reg [31:0] PC,
                     output reg WB_EN,
                     output reg MEM_R_EN,
                     output reg [31:0] ALU_Res,
@@ -155,7 +145,6 @@ module MEM_stage_Reg(
                     );
                     always @(posedge clk, posedge rst) begin
                         if(rst) begin
-                            PC <= 32'b0;
 
                             WB_EN <= 0;
                             MEM_R_EN <= 0;
@@ -165,7 +154,6 @@ module MEM_stage_Reg(
 
                         end
                         else if(clk) begin
-                            PC<=PC_in;
 
                             WB_EN <= WB_EN_IN;
                             MEM_R_EN <= MEM_R_EN_IN;
