@@ -8,7 +8,7 @@ module EX_stage(input [31:0] PC,
                 input [31:0] Val_RM,
                 input [11:0] imm,
                 input [11:0] shift_operand,
-                input [23:0] signed_immed_24,
+                input signed [23:0] signed_immed_24,
                 input [3:0] status,
                 
                 
