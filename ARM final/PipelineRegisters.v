@@ -26,6 +26,7 @@ module ID_stage_Reg(input clk, rst,
                     input [3:0] EXE_CMD_IN,
                     input B_IN, 
                     input S_IN,
+                    input I_IN,
                     input [31:0] Val_RN_IN,
                     input [31:0] Val_RM_IN,
                     input [11:0] imm_IN,
@@ -44,6 +45,7 @@ module ID_stage_Reg(input clk, rst,
                     output reg [3:0] EXE_CMD,
                     output reg B, 
                     output reg S,
+                    output reg I,
                     output reg [31:0] Val_RN,
                     output reg [31:0] Val_RM,
                     output reg [11:0] imm,
@@ -62,6 +64,7 @@ module ID_stage_Reg(input clk, rst,
                             MEM_W_EN <= 0;
                             B <= 0;
                             S <= 0;
+                            I <= 0;
                             Val_RN <= 0;
                             Val_RM <= 0;
                             imm <= 0;
@@ -78,6 +81,7 @@ module ID_stage_Reg(input clk, rst,
                             MEM_W_EN <= MEM_W_EN_IN;
                             B <= B_IN;
                             S <= S_IN;
+                            I <= I_IN;
                             Val_RN <= Val_RN_IN;
                             Val_RM <= Val_RM_IN;
                             imm <= imm_IN;

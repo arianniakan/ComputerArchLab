@@ -33,10 +33,10 @@ always @(Op_code, mode, S_in) begin
         endcase
         end
         2'b01: begin
-            case (Op_code)
+            case (S_in)
 
-            LDR: begin  mem_read = 1'b1; Execute_Command = 4'b0010; WB_enable = 1'b1; S_out = 1'b1; end 
-            STR: begin  mem_write = 1'b1; Execute_Command = 4'b0010; S_out = 1'b0; end
+            1'b1: begin  mem_read = 1'b1; Execute_Command = 4'b0010; WB_enable = 1'b1; S_out = 1'b1; end 
+            1'b0: begin  mem_write = 1'b1; Execute_Command = 4'b0010; S_out = 1'b0; end
             endcase
         end
         2'b10: begin

@@ -1,12 +1,16 @@
 module Val2gen (
                     input m,
+                    input I,
                     input signed [31:0] Val_RM,
                     input [11:0] imm,
                     input [11:0] shift_operand,
                     output reg [31:0] Val2
 );
     always @(m, Val_RM, imm, shift_operand) begin
-        if(m)begin
+        if (m) begin
+            Val2 = {20'b0, shift_operand};
+        end
+        else if(I)begin
             case(imm[11:8])
             4'd0: Val2 = {24'd0, imm[7:0]};
             4'd1: Val2 = {imm[1:0], 24'd0, imm[7:2]};
@@ -26,7 +30,7 @@ module Val2gen (
             4'd15: Val2 = {22'd0, imm[7:0], 2'd0};
             endcase
          end
-        else if(~m) begin 
+        else begin 
             case (shift_operand[6:5])
                 2'b00: Val2 = Val_RM << shift_operand[11:7];
                 2'b01: Val2 = Val_RM >> shift_operand[11:7];
