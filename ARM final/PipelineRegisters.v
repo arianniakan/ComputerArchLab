@@ -7,18 +7,28 @@ always @(posedge clk, posedge rst) begin
         PC <= 32'b0;
         Instruction <=32'b0;
     end
-    else if(clk) begin
-        if(~freeze) begin
+
+    else if(clk) begin   
+        if (flush) begin
+            PC <= 32'b0;
+            Instruction <=32'b0; 
+        end
+        else if(~freeze) begin
             PC<=PC_in;
             Instruction<=Instruction_in;
         end
+        else begin
+            PC<=PC;
+            Instruction<=Instruction;
+        end
+
     end
 end
 endmodule
 
 
 
-module ID_stage_Reg(input clk, rst, 
+module ID_stage_Reg(input clk, rst, flush,
                     input [31:0] PC_IN, 
                     input WB_EN_IN,
                     input MEM_R_EN_IN,
@@ -75,21 +85,40 @@ module ID_stage_Reg(input clk, rst,
                             EXE_CMD <= 0;
                         end
                         else if(clk) begin
-                            PC<=PC_IN;
-                            WB_EN <= WB_EN_IN;
-                            MEM_R_EN <= MEM_R_EN_IN;
-                            MEM_W_EN <= MEM_W_EN_IN;
-                            B <= B_IN;
-                            S <= S_IN;
-                            I <= I_IN;
-                            Val_RN <= Val_RN_IN;
-                            Val_RM <= Val_RM_IN;
-                            imm <= imm_IN;
-                            shift_operand <= shift_operand_IN;
-                            signed_immed_24 <= signed_immed_24_IN;
-                            WB_Dest <= WB_Dest_IN;
-                            status <= status_IN;
-                            EXE_CMD <= EXE_CMD_IN;
+                            if(flush) begin
+                                PC <= 32'b0; 
+                                WB_EN <= 0;
+                                MEM_R_EN <= 0;
+                                MEM_W_EN <= 0;
+                                B <= 0;
+                                S <= 0;
+                                I <= 0;
+                                Val_RN <= 0;
+                                Val_RM <= 0;
+                                imm <= 0;
+                                shift_operand <= 0;
+                                signed_immed_24 <= 0;
+                                WB_Dest <= 0;
+                                status <= 0;
+                                EXE_CMD <= 0;
+                            end
+                        else begin
+                                PC<=PC_IN;
+                                WB_EN <= WB_EN_IN;
+                                MEM_R_EN <= MEM_R_EN_IN;
+                                MEM_W_EN <= MEM_W_EN_IN;
+                                B <= B_IN;
+                                S <= S_IN;
+                                I <= I_IN;
+                                Val_RN <= Val_RN_IN;
+                                Val_RM <= Val_RM_IN;
+                                imm <= imm_IN;
+                                shift_operand <= shift_operand_IN;
+                                signed_immed_24 <= signed_immed_24_IN;
+                                WB_Dest <= WB_Dest_IN;
+                                status <= status_IN;
+                                EXE_CMD <= EXE_CMD_IN;
+                            end
                         end
                     end
 endmodule
