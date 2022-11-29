@@ -7,7 +7,7 @@ wire [31:0] PC_EX, Instruction_EX;
 wire [31:0] PC_MEM, Instruction_MEM;
 wire [31:0] PC_WB, Instruction_WB;
 
-
+wire Hazard;
 
 // instruction fetch stage instance 
 IF_Stage IF_inst (
@@ -64,6 +64,9 @@ wire [23:0] EX_signed_immed_24;
 wire [3:0]  EX_WB_Dest;
 wire [3:0]  EX_status;
 wire [3:0]  EX_EXE_CMD;
+
+wire [3:0] src2;
+wire has_src2;
  ID_stage ID_inst(
                 .clk(clk), 
                 .rst(rst),
@@ -73,6 +76,8 @@ wire [3:0]  EX_EXE_CMD;
                 .Dest_wb(Dest_wb),
                 .Result_WB(Result_WB),
                 .writeBackEn(writeBackEn),
+                .Hazard(Hazard)
+
                 .WB_EN   (ID_WB_EN),
                 .MEM_R_EN(ID_MEM_R_EN),
                 .MEM_W_EN(ID_MEM_W_EN),
@@ -80,7 +85,9 @@ wire [3:0]  EX_EXE_CMD;
                 .B       (ID_B), 
                 .S       (ID_S),
                 .Val_RN  (ID_Val_RN),
-                .Val_RM  (ID_Val_RM)
+                .Val_RM  (ID_Val_RM),
+                .src2(src2),
+                .has_src2(has_src2)
                 );
 wire EX_I;
 ID_stage_Reg ID_regs(.clk(clk), 
@@ -239,4 +246,21 @@ assign Dest_wb = WB_WB_Dest;
 
 //end of Write Back stage instance
 
+
+
+//Hazard Detection Unit instance
+
+
+HazardDetection HD (
+    .src1(Instruction_ID[19:16]),
+    .src2(src2),
+    .EXE_dest(EX_WB_Dest),
+    .MEM_dest(MEM_WB_Dest),
+    .EXE_WB_en(EX_WB_EN),
+    .MEM_WB_en(MEM_WB_EN),
+    .has_src2(has_src2),
+    .Hazard(Hazard)
+);
+
+//end of Hazard Detection Unit instance
 endmodule
