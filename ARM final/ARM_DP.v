@@ -9,13 +9,16 @@ wire [31:0] PC_WB, Instruction_WB;
 
 wire Hazard;
 
+wire        EX_B;
+wire [31:0] EX_BranchAd;
+
 // instruction fetch stage instance 
 IF_Stage IF_inst (
                   .clk(clk), 
                   .rst(rst), 
-                  .freeze(1'b0), 
-                  .Branch_taken(1'b0), 
-                  .BranchAddr(32'b0),
+                  .freeze(Hazard), 
+                  .Branch_taken(EX_B), 
+                  .BranchAddr(EX_BranchAd),
                   .PC(PC_IF),
                   .Instruction(Instruction_IF)
                  );
@@ -23,8 +26,8 @@ IF_Stage IF_inst (
 IF_stage_Reg IF_regs (
                      .clk(clk),
                      .rst(rst), 
-                     .freeze(1'b0), 
-                     .flush(1'b0),
+                     .freeze(Hazard), 
+                     .flush(EX_B),
                      .PC_in(PC_IF), 
                      .Instruction_in(Instruction_IF), 
                      .PC(PC_ID),
@@ -55,7 +58,6 @@ wire        EX_WB_EN;
 wire        EX_MEM_R_EN;
 wire        EX_MEM_W_EN;
 wire        EX_S;
-wire        EX_B;
 wire [31:0] EX_Val_RN;
 wire [31:0] EX_Val_RM;
 wire [11:0] EX_imm;
@@ -76,7 +78,7 @@ wire has_src2;
                 .Dest_wb(Dest_wb),
                 .Result_WB(Result_WB),
                 .writeBackEn(writeBackEn),
-                .Hazard(Hazard)
+                .Hazard(Hazard),
 
                 .WB_EN   (ID_WB_EN),
                 .MEM_R_EN(ID_MEM_R_EN),
@@ -92,6 +94,7 @@ wire has_src2;
 wire EX_I;
 ID_stage_Reg ID_regs(.clk(clk), 
                     .rst(rst), 
+                    .flush(EX_B),
                     .PC_IN(PC_ID), 
                     .WB_EN_IN(ID_WB_EN),
                     .MEM_R_EN_IN(ID_MEM_R_EN),
@@ -135,7 +138,6 @@ ID_stage_Reg ID_regs(.clk(clk),
 // Execution Stage Instance 
 
 
-wire [31:0] EX_BranchAd;
 wire [3:0]  EX_status_out;
 wire [31:0] EX_ALU_out;
 
