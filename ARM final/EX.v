@@ -29,8 +29,10 @@ wire [31:0] Val2;
 //end of the val2 generator instance 
 
 //branch address generation
-
-assign BranchAddr = PC + signed_immed_24;
+assign BranchAddr = PC + {signed_immed_24[23], signed_immed_24[23],
+                          signed_immed_24[23], signed_immed_24[23],
+                          signed_immed_24[23], signed_immed_24[23],
+                          signed_immed_24, 2'b00};
 
 
 //end of branch address generation
