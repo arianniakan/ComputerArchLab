@@ -24,7 +24,7 @@ always @(ALU_Comnd,Val1,Val2,C) begin
     end
     ADC:  begin {C1, ALU_out} = Val1+Val2+C; V1 = (Val1[31] ^ Val2[31]) & (ALU_out[31] ^ Val1[31]);end
     SUB:  begin {C1, ALU_out} = Val1-Val2; V1 = (Val1[31] ^ Val2[31]) & (ALU_out[31] ^ Val1[31]);end
-    SBC:  begin {C1, ALU_out} = Val1-Val2-~C; V1 = (Val1[31] ^ Val2[31]) & (ALU_out[31] ^ Val1[31]);end
+    SBC:  begin {C1, ALU_out} = Val1-Val2-(!C); V1 = (Val1[31] ^ Val2[31]) & (ALU_out[31] ^ Val1[31]);end
     AND:  ALU_out = Val1&Val2;
     ORR:  ALU_out = Val1|Val2;
     EOR:  ALU_out = Val1^Val2;
