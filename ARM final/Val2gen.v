@@ -6,7 +6,7 @@ module Val2gen (
                     input [11:0] shift_operand,
                     output reg [31:0] Val2
 );
-    always @(m, Val_RM, imm, shift_operand) begin
+    always @(m, Val_RM, imm, shift_operand, I) begin
         if (m) begin
             Val2 = {20'b0, shift_operand};
         end
