@@ -1,5 +1,5 @@
 module ALU (input [3:0] ALU_Comnd,
-            input signed [31:0] Val1,Val2,
+            input [31:0] Val1,Val2,
             input C,
             output reg [31:0] ALU_out,
             output [3:0] SR);
