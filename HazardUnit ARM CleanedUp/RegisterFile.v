@@ -27,7 +27,7 @@ always @(negedge clk, posedge rst) begin
         REGS[14] <= 32'd14;
     end
     else if (~clk) begin
-        if (writeBackEn) REGS[Dest_wb] <= Result_WB;
+        if (WriteBackEn) REGS[Dest_wb] <= Result_WB;
     end
 end
 assign reg1 = REGS[src1];
