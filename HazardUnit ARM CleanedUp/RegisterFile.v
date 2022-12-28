@@ -5,6 +5,8 @@ module RegisterFile(
   input WriteBackEn,
   output [31:0] reg1,reg2
   );
+  reg [31:0] REGS [0:14];
+
 
 always @(negedge clk, posedge rst) begin
     if(rst) begin
