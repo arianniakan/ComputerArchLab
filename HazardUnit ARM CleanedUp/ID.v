@@ -28,7 +28,7 @@ RegisterFile R1 (
   .reg1(Val_Rn),.reg2(Val_Rm)
   );
 
-controler C1 (.op_code(Instruction[24:21]),.mode(Instruction[27:26]),.S(Instruction[20]),.SS(SS1),
+ControlUnit C1 (.op_code(Instruction[24:21]),.mode(Instruction[27:26]),.S(Instruction[20]),.SS(SS1),
               .B(B1),.MEM_R_EN(MEM_R_EN1),.MEM_W_EN(MEM_W_EN1),
               .WB_EN(WB_EN1),.EXE_CMD(EXE_CMD1));
 
