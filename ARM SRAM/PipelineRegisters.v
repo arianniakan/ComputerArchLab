@@ -103,6 +103,8 @@ module EXE_Stage_Reg(
   input[31:0] ALU_result_in, Val_Rm_in,
   input[3:0] Dest_in,
 
+  input freeze,
+
   output reg WB_en, MEM_R_EN, MEM_W_EN,
   output reg[31:0] ALU_result, Val_Rm,
   output reg[3:0] Dest
@@ -114,7 +116,7 @@ module EXE_Stage_Reg(
       ALU_result=0; Val_Rm=0;
       Dest=0;
     end
-    else begin
+    else if(~freeze) begin
       WB_en = WB_en_in;
       MEM_R_EN = MEM_R_EN_in;
       MEM_W_EN = MEM_W_EN_in;
@@ -132,6 +134,8 @@ module MEM_Stage_Reg(
   input[31:0] ALU_result_in, MEM_result_in,
   input[3:0] Dest_in,
 
+  input freeze,
+
   output reg WB_EN, MEM_R_EN,
   output reg[31:0] ALU_result, MEM_result,
   output reg[3:0] Dest
@@ -144,7 +148,7 @@ module MEM_Stage_Reg(
       MEM_result=0;
       Dest=4'b0;
     end
-    else begin
+    else if(~freeze)begin
       WB_EN=WB_EN_in;
       MEM_R_EN=MEM_R_EN_in;
       ALU_result=ALU_result_in;
