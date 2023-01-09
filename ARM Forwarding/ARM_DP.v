@@ -1,4 +1,4 @@
-module Top_Module(
+module ARM_DP(
   input clk,rst
 );
   wire[31:0] IF_PC, IF_Reg_PC, IF_Ins, IF_Reg_Ins;
