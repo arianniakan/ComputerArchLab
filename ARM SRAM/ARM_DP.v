@@ -1,6 +1,17 @@
 module ARM_DP(
-  input clk,rst
+  input clk,rst,
+  output [31:0] readData,
+  output ready,
+  inout [31:0] SRAM_DQ,
+  output [16:0] SRAM_ADDR,
+  output SRAM_UB_N,
+  output SRAM_LB_N,
+  output SRAM_WE_N,
+  output SRAM_CE_N,
+  output SRAM_OE_N,
+  output wb_en
 );
+
   wire[31:0] IF_PC, IF_Reg_PC, IF_Ins, IF_Reg_Ins;
 
   wire[31:0] ID_Val_Rn, ID_Val_Rm;
@@ -37,14 +48,17 @@ module ARM_DP(
   wire[3:0] Status_Register_Out;
 
   wire[31:0] MUX_1_out, MUX_2_out;
-  wire[1:0] Sel_src1,Sel_src2;
+  wire[1:0] Sel_src1, Sel_src2;
 
   wire Hazard;
+
+
+  assign wb_en=MEM_Reg_WB_EN;
 
   IF_Stage ifstage(
     .clk(clk),
     .rst(rst),
-    .freeze(Hazard),
+    .freeze(Hazard | ~ready),
     .Branch_taken(ID_Reg_B),
     .BranchAddr(Exe_Branch_Address),
     .PC(IF_PC),
@@ -54,7 +68,7 @@ module ARM_DP(
   IF_Stage_Reg ifstagereg(
     .clk(clk),
     .rst(rst),
-    .freeze(Hazard),
+    .freeze(Hazard | ~ready),
     .flush(ID_Reg_B),
     .PC_in(IF_PC),
     .Instruction_in(IF_Ins),
@@ -70,7 +84,7 @@ module ARM_DP(
     .writeBackEn(MEM_Reg_WB_EN),
     .Dest_wb(MEM_Reg_Dest),
     .SR(Status_Register_Out),
-    .hazard(Hazard),
+    .hazard(Hazard | ~ready),
 
     .WB_EN(ID_WB_EN),
     .MEM_R_EN(ID_MEM_R_EN),
@@ -109,6 +123,7 @@ module ARM_DP(
     .Dest_IN(ID_Dest),
     .Status_in(Status_Register_Out),
 
+    .freeze(~ready),
 
     .src1_in(ID_src1),
     .src2_in(ID_src2),
@@ -169,6 +184,8 @@ module ARM_DP(
     .Val_Rm_in(MUX_2_out),
     .Dest_in(ID_Reg_Dest),
 
+    .freeze(~ready),
+
     .WB_en(Exe_Reg_WB_en),
     .MEM_R_EN(Exe_Reg_MEM_R_EN),
     .MEM_W_EN(Exe_Reg_MEM_W_EN),
@@ -177,7 +194,7 @@ module ARM_DP(
     .Dest(Exe_Reg_Dest)
   );
 
-  MEM_Stage memstage(
+  /*MEM_Stage memstage(
     .clk(clk),
     .rst(rst),
     .Val_Rm(Exe_Reg_Val_Rm),
@@ -185,7 +202,29 @@ module ARM_DP(
     .MEM_W_EN(Exe_Reg_MEM_W_EN),
     .MEM_R_EN(Exe_Reg_MEM_R_EN),
     .MEM_result(MEM_result)
-  );
+  );*/
+
+  SRAM_Controller sramcontroller(
+      .clk(clk),
+      .rst(rst),
+      .write_en(Exe_Reg_MEM_W_EN),
+      .read_en(Exe_Reg_MEM_R_EN),
+      .address(Exe_Reg_ALU_result),
+      .writeData(Exe_Reg_Val_Rm),
+
+      .readData(MEM_result),
+
+      .ready(ready),
+
+      .SRAM_DQ(SRAM_DQ),
+      .SRAM_ADDR(SRAM_ADDR),
+      .SRAM_UB_N(SRAM_UB_N),
+      .SRAM_LB_N(SRAM_LB_N),
+      .SRAM_WE_N(SRAM_WE_N),
+      .SRAM_CE_N(SRAM_CE_N),
+      .SRAM_OE_N(SRAM_OE_N)
+    );
+
 
   MEM_Stage_Reg memstagereg(
     .clk(clk),
@@ -195,6 +234,8 @@ module ARM_DP(
     .ALU_result_in(Exe_Reg_ALU_result),
     .MEM_result_in(MEM_result),
     .Dest_in(Exe_Reg_Dest),
+
+    .freeze(~ready),
 
     .WB_EN(MEM_Reg_WB_EN),
     .MEM_R_EN(MEM_Reg_MEM_R_EN),
@@ -244,4 +285,5 @@ module ARM_DP(
     .Sel_src1(Sel_src1),
     .Sel_src2(Sel_src2)
     );
+
 endmodule

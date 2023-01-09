@@ -44,10 +44,10 @@ module SRAM_Controller(
   reg ps,ns;
 
   localparam  idle = 0, w_r_wait = 1;
-  assign SRAM_UB_N=1'b1;
-  assign SRAM_LB_N=1'b1;
-  assign SRAM_CE_N=1'b1;
-  assign SRAM_OE_N=1'b1;
+  assign SRAM_UB_N=1'b0;
+  assign SRAM_LB_N=1'b0;
+  assign SRAM_CE_N=1'b0;
+  assign SRAM_OE_N=1'b0;
   assign SRAM_WE_N = ~write_en;
   assign SRAM_DQ = (write_en) ? writeData : 32'bz;
   assign readData = (read_en) ? SRAM_DQ : 32'bz;
