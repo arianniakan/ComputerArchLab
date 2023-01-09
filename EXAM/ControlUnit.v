@@ -6,15 +6,16 @@ module ControlUnit(input[3:0]op_code,
                    MEM_R_EN,
                    MEM_W_EN,
                    WB_EN,
-                   output reg [3:0] EXE_CMD);
+                   output reg [3:0] EXE_CMD,
+                   input sort_cycle_count);
 
 localparam [3:0] MOV = 4'b1101, MVN = 4'b1111, ADD = 4'b0100, 
                  ADC = 4'b0101, SUB = 4'b0010, SBC = 4'b0110,
                  AND = 4'b0000, ORR = 4'b1100, EOR = 4'b0001, 
                  CMP = 4'b1010, TST = 4'b1000, LDR = 4'b0100,
-                 STR = 4'b0100, NOP = 4'b0000; 
+                 STR = 4'b0100, NOP = 4'b0000, SORT = 4'b0011;
 
-    always@(op_code,mode,S)begin
+    always@(op_code,mode,S, sort_cycle_count)begin
     EXE_CMD = 4'b0; MEM_R_EN = 0; WB_EN = 0; MEM_W_EN = 0; B = 0;  SS = 0;
     case (mode)
       2'b00:
@@ -30,6 +31,14 @@ localparam [3:0] MOV = 4'b1101, MVN = 4'b1111, ADD = 4'b0100,
           EOR: begin EXE_CMD = 4'b1000; MEM_R_EN = 0; WB_EN = 1; MEM_W_EN = 0; B = 0;  SS = S; end
           CMP: begin EXE_CMD = 4'b0100; MEM_R_EN = 0; WB_EN = 0; MEM_W_EN = 0; B = 0;  SS = S; end
           TST: begin EXE_CMD = 4'b0110; MEM_R_EN = 0; WB_EN = 0; MEM_W_EN = 0; B = 0; SS = S;  end
+          SORT: begin
+           WB_EN = 1;
+            if(sort_cycle_count == 1'b0)
+              EXE_CMD = 4'b1110;
+            else
+              EXE_CMD = 4'b1111;
+            end
+
           default: begin EXE_CMD = 4'b0; MEM_R_EN = 0; WB_EN = 0; MEM_W_EN = 0; B = 0;  SS = 0;end
         endcase
       2'b01:
