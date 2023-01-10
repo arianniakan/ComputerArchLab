@@ -22,10 +22,8 @@ module IF_Stage_Reg(
 endmodule
 
 
-
-module ID_Stage_Reg(input clk , rst,
-                          flush,
-                    input WB_EN_IN, MEM_R_EN_IN, MEM_W_EN_IN, B_IN,S_IN,
+module ID_Stage_Reg(input clk , rst,flush,
+                    input WB_EN_IN,MEM_R_EN_IN,MEM_W_EN_IN,B_IN,S_IN,
                     input [3:0] EXE_CMD_IN,
                     input [31:0] PC_IN,
                     input [31:0] Val_Rn_IN,Val_Rm_IN,
@@ -34,6 +32,8 @@ module ID_Stage_Reg(input clk , rst,
                     input [23:0] Signed_imm_24_IN,
                     input [3:0] Dest_IN,
                     input [3:0] Status_in,
+
+                    input freeze,
 
                     input[3:0] src1_in,src2_in,
 
@@ -77,7 +77,7 @@ module ID_Stage_Reg(input clk , rst,
       Dest    <=  4'b0;
       Status <= 4'b0;
 	 end
-    else begin
+    else if(~freeze) begin
       src1<=src1_in; src2<=src2_in;
       WB_EN    <=  WB_EN_IN ;
       MEM_R_EN <=  MEM_R_EN_IN;
@@ -96,6 +96,7 @@ module ID_Stage_Reg(input clk , rst,
     end
   end
 endmodule
+
 
 
 module EXE_Stage_Reg(
