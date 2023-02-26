@@ -1,14 +1,5 @@
 module ARM_DP(
   input clk,rst,
-  output [31:0] readData,
-  output ready,
-  inout [31:0] SRAM_DQ,
-  output [16:0] SRAM_ADDR,
-  output SRAM_UB_N,
-  output SRAM_LB_N,
-  output SRAM_WE_N,
-  output SRAM_CE_N,
-  output SRAM_OE_N,
   output wb_en
 );
 
@@ -48,10 +39,29 @@ module ARM_DP(
   wire[3:0] Status_Register_Out;
 
   wire[31:0] MUX_1_out, MUX_2_out;
-  wire[1:0] Sel_src1, Sel_src2;
+  wire[1:0] Sel_src1,Sel_src2;
 
   wire Hazard;
 
+  wire ready;
+  wire SRAM_WE_N;
+  wire[16:0] SRAM_ADDR;
+  wire[31:0] SRAM_DQ;
+
+  wire[31:0] sram_rdata;
+  wire sram_ready;
+  wire[31:0] sram_address;
+  wire[31:0] sram_wdata;
+  wire sram_w_en;
+  wire sram_r_en;
+
+  wire hit;
+  wire[31:0] cache_rdata;
+  wire cache_w_en;
+  wire[31:0] cache_wdata;
+  wire[18:0] cache_address;
+  wire invalidate;
+  wire change_LRU;
 
   assign wb_en=MEM_Reg_WB_EN;
 
@@ -204,27 +214,73 @@ module ARM_DP(
     .MEM_result(MEM_result)
   );*/
 
+  cache_controller cachecontroller(
+    .clk(clk),
+    .rst(rst),
+
+    .address(Exe_Reg_ALU_result),
+    .wdata(Exe_Reg_Val_Rm),
+    .MEM_R_EN(Exe_Reg_MEM_R_EN),
+    .MEM_W_EN(Exe_Reg_MEM_W_EN),
+
+    .rdata(MEM_result),
+    .ready(ready),
+
+    .sram_rdata(sram_rdata),
+    .sram_ready(sram_ready),
+
+    .sram_address(sram_address),
+    .sram_wdata(sram_wdata),
+    .sram_w_en(sram_w_en),
+    .sram_r_en(sram_r_en),
+
+    .hit(hit),
+    .cache_rdata(cache_rdata),
+
+    .cache_w_en(cache_w_en),
+    .cache_wdata(cache_wdata),
+    .cache_address(cache_address),
+    .invalidate(invalidate),
+    .change_LRU(change_LRU)
+    );
+
+  cache cache(
+        .clk(clk),
+        .rst(rst),
+        .address(cache_address),
+        .wdata(cache_wdata),
+        .cache_w_en(cache_w_en),
+        .invalidate(invalidate),
+        .change_LRU(change_LRU),
+
+        .hit_or_miss(hit),
+        .rdata(cache_rdata)
+    );
+
   SRAM_Controller sramcontroller(
       .clk(clk),
       .rst(rst),
-      .write_en(Exe_Reg_MEM_W_EN),
-      .read_en(Exe_Reg_MEM_R_EN),
-      .address(Exe_Reg_ALU_result),
-      .writeData(Exe_Reg_Val_Rm),
+      .write_en(sram_w_en),
+      .read_en(sram_r_en),
+      .address(sram_address),
+      .writeData(sram_wdata),
 
-      .readData(MEM_result),
+      .readData(sram_rdata),
 
-      .ready(ready),
+      .ready(sram_ready),
 
       .SRAM_DQ(SRAM_DQ),
       .SRAM_ADDR(SRAM_ADDR),
-      .SRAM_UB_N(SRAM_UB_N),
-      .SRAM_LB_N(SRAM_LB_N),
-      .SRAM_WE_N(SRAM_WE_N),
-      .SRAM_CE_N(SRAM_CE_N),
-      .SRAM_OE_N(SRAM_OE_N)
+      .SRAM_WE_N(SRAM_WE_N)
     );
 
+  SRAM sram(
+    .CLK(clk),
+    .RST(rst),
+    .SRAM_WE_N(SRAM_WE_N),
+    .SRAM_ADDR(SRAM_ADDR),
+    .SRAM_DQ(SRAM_DQ)
+    );
 
   MEM_Stage_Reg memstagereg(
     .clk(clk),
